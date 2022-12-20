@@ -14,7 +14,6 @@ function App(): JSX.Element {
   }
 
   function orderAlph(arr: Pokemon[], reverse = false): Pokemon[] {
-    console.log(arr)
     return [...arr].sort((a, b) => {
       return reverse
         ? b.name.localeCompare(a.name)
@@ -23,26 +22,24 @@ function App(): JSX.Element {
   }
 
   useEffect(() => {
-    return () => {
-      getPokedex().then(async res => {
-        const pkms = res.slice(0, 4)
+    getPokedex().then(async res => {
+      const pkms = res.slice(0, 4)
 
-        const newPkms = await Promise.all(
-          pkms.map(async pkm => {
-            return getPokemon(pkm.url).then(newPkm => {
-              return {
-                name: newPkm.name,
-                id: newPkm.name,
-                sprites: newPkm.sprites,
-              }
-            })
-          }),
-        )
-        const orderedPkms = orderAlph(newPkms)
-        setInitialPokemon(() => [...orderedPkms])
-        setPokemon(() => [...orderedPkms])
-      })
-    }
+      const newPkms = await Promise.all(
+        pkms.map(async pkm => {
+          return getPokemon(pkm.url).then(newPkm => {
+            return {
+              name: newPkm.name,
+              id: newPkm.name,
+              sprites: newPkm.sprites,
+            }
+          })
+        }),
+      )
+      const orderedPkms = orderAlph(newPkms)
+      setInitialPokemon(() => [...orderedPkms])
+      setPokemon(() => [...orderedPkms])
+    })
   }, [])
 
   return (
