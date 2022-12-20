@@ -8,7 +8,7 @@ function App(): JSX.Element {
 
   function searchPokemon(str: string) {
     const filterPokemon = [...initialPokemon].filter(pkm => {
-      if (pkm.name.includes(str)) return pkm
+      if (pkm.name.includes(str.toLocaleLowerCase())) return pkm
     })
     return setPokemon(filterPokemon)
   }
